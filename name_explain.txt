@@ -1,0 +1,31 @@
+
+
+42.2007-2007-15-35.379.*.50000.39000.png
+
+For example, the image below was constructed from 41 PNG files with the file structure: 42.2007-2007-15-35.379.*.50000.39000.png
+
+“42” refers to a randomized slide number index and is not included in the metadata (described later). This can be ignored. 
+“2007-2007-15-35” refers to the sampling year and pollen trap coordinate
+“379” represents the random image number (ranging from 1-1000)
+“*” represents the Z-plane (-20 to 20 um) currently being viewed
+“50000.39000” represents the x,y coordinates of the upper left corner of the current image stack within the larger, original scanned NGR file 
+
+
+
+
+
+15648 198 50000 39000 1 455 872 -1 3.30E+01 2 cec
+
+1) The random image window number (this can be ignored)
+2) The slide number (“198”) corresponds to the pollen sample. A list of all 199 pollen samples counted can be found in a separate file (SlideNumbersAndNames.txt). In this instance, 198 (viewable in the upper left corner of the image) corresponds to the pollen sample “2007-2007-15-35”
+3) The (absolute) x coordinate of image within the original scanned image
+4) The (absolute) y coordinate of image within the original scanned image 
+5) Annotated pollen number within the tagged PNG. The numbers range from 1 to the total number of grains counted within a single image stack.
+6) The (relative) x coordinate of the tagged pollen grain within the PNG stack
+7) The (relative) y coordinate of the tagged pollen grain within the PNG stack
+8) The z-plane where the pollen grain was identified (In this case -1; viewable in the upper right corner of the image). When gains span multiple depths, the center plane is tagged.
+9) The radius of the circled pollen grain
+10) The confidence level of the taxon identification (0-9)
+11) The 3-letter identification code
+
+
