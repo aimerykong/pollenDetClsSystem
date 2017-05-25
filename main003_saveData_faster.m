@@ -52,7 +52,7 @@ end
 imdb.path_to_dataset = path_to_save;
 imdb.imList = {};
 imdb.labelname = {};
-for i = 1:length(validList) 
+for i = 8300:length(validList) % [[[!!!!?? start point ??!!!!]]]
     curItem = validList{i};    
     className = curItem{end};
     if ~isdir( fullfile(path_to_save, className) )
@@ -73,10 +73,18 @@ for i = 1:length(validList)
         anchor = strfind(filename, '*');
         headmatch = strncmp( filename, pngFolderImgList.(curPngFolder), anchor-1);
         validIndex4head = find(headmatch);
-                
+        
+        if isempty(validIndex4head)
+            continue;
+        end
+        
         tailmatch = strfind( pngFolderImgList.(curPngFolder)(validIndex4head), filename(anchor+1:end) );
         tailmatch = not(cellfun('isempty', tailmatch));
         validIndex4tail_inhead = find(tailmatch);
+        
+        if isempty(validIndex4tail_inhead)
+            continue;
+        end
         
         validIndex = validIndex4head(validIndex4tail_inhead);
         
