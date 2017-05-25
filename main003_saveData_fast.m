@@ -45,6 +45,7 @@ for i = 1:length(pngFolder)
     pngFolderImgList.(['png' int2str(i)]) = dir(fullfile(path_to_fetch, ['png' int2str(i)], '*png' ));
     pngFolderImgList.(['png' int2str(i)]) = {pngFolderImgList.(['png' int2str(i)]).name};
 end
+save('pngFolderImgList.mat', 'pngFolderImgList');
 
 imdb.path_to_dataset = path_to_save;
 imdb.imList = {};
