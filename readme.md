@@ -1,6 +1,5 @@
 # The BIC project (ngrcrop) -- automated pollen recognition system
 
-![alt text](http://www.ics.uci.edu/~skong2/img/demo_BIC_highRes.png "visualization")
 
 ![alt text](http://www.ics.uci.edu/~skong2/img/demo_BIC_lowRes.png "visualization")
 
