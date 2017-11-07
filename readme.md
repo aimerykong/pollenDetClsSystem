@@ -1,4 +1,4 @@
-# The BIC project (ngrcrop) -- automated pollen recognition system
+# Automated Recognition and Counting of Pollen Grain Species from Field Samples
 
 Please visit also visit the [webpage page of Pollen Morphology-based Classification and Analysis](http://www.ics.uci.edu/~fowlkes/bioshape/index.html) for more relevant projects.
 
