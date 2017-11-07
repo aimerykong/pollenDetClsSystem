@@ -1,5 +1,7 @@
 # The BIC project (ngrcrop) -- automated pollen recognition system
 
+Please visit also visit the [webpage page of Pollen Morphology-based Classification and Analysis](http://www.ics.uci.edu/~fowlkes/bioshape/index.html) for more relevant projects.
+
 
 ![alt text](http://www.ics.uci.edu/~skong2/img/demo_BIC_lowRes.png "visualization")
 
