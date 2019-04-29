@@ -3,20 +3,18 @@
 run(fullfile(path_to_matconvnet, 'matlab', 'vl_setupnn'));
 addpath(fullfile(path_to_matconvnet, 'matlab'));
 vl_compilenn('enableGpu', true, ...
-               'cudaRoot', '/usr/local/cuda-7.5', ...
-               'cudaMethod', 'nvcc', ...
-               'enableCudnn', true, ...
-               'cudnnRoot', '/usr/local/cuda-7.5/cudnn-v5') ;
+               'cudaRoot', '/usr/local/cuda', ...
+               'cudaMethod', 'nvcc') ;
 
 %}
 clear
 close all
 clc;
 rng(777);
-addpath('./libs/exportFig')
-addpath('./libs/layerExt')
-addpath('./libs/myFunctions')
-path_to_matconvnet = './libs/matconvnet';
+addpath('../libs/exportFig')
+addpath('../libs/layerExt')
+addpath('../libs/myFunctions')
+path_to_matconvnet = '../libs/matconvnet';
 path_to_model = '../models/';
 
 run(fullfile(path_to_matconvnet, 'matlab', 'vl_setupnn'));
@@ -28,7 +26,7 @@ mean_b = 103.939;
 mean_bgr = reshape([mean_b, mean_g, mean_r], [1,1,3]);
 mean_rgb = reshape([mean_r, mean_g, mean_b], [1,1,3]);
 
-gpuId = 3; %[1, 2];
+gpuId = 1; %[1, 2];
 gpuDevice(gpuId);
 %% load detection&segmentation model
 saveFolder = 'main011_segDet_res50';
@@ -122,8 +120,10 @@ netCls.mode = 'test' ;
 netCls.conserveMemory = 1;
 %% demo for a pile of slides
 load('map_num2name.mat');
-load('imdb_cleanup.mat');
-path_to_dataset = '/home/skong2/pollenProject_dataset';
+load('../imdb_files/imdb_cleanup.mat');
+%path_to_dataset = '/home/skong2/pollenProject_dataset'; % /home/fowlkes/restore/pollen/tropical
+%path_to_dataset = '/home/fowlkes/restore/pollen/tropical'; % 
+path_to_dataset = '../data4demo';
 
 demoFigure = './demoFigure';
 if ~isdir(demoFigure)
@@ -196,7 +196,7 @@ for i = 1:length(imgWindowList)
 end
 netFineSeg.move('cpu');
 %% classification
-load('imdb_merge4cls_predSeg.mat');
+load('../imdb_files/imdb_merge4cls_predSeg.mat');
 fprintf('classification...\n');
 predLabelList = cell(1, length(imgWindowList));
 predConfList = cell(1, length(imgWindowList));
