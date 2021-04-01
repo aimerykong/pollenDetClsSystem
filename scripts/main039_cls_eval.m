@@ -13,10 +13,10 @@ clear
 close all
 clc;
 rng(777);
-addpath('./libs/exportFig')
-addpath('./libs/layerExt')
-addpath('./libs/myFunctions')
-path_to_matconvnet = './libs/matconvnet';
+addpath('../libs/exportFig')
+addpath('../libs/layerExt')
+addpath('../libs/myFunctions')
+path_to_matconvnet = '/home/skong2/project/autoSegClsSystem_BCI/libs/matconvnet';
 path_to_model = '../models/';
 
 run(fullfile(path_to_matconvnet, 'matlab', 'vl_setupnn'));
@@ -28,10 +28,10 @@ mean_b = 103.939;
 mean_bgr = reshape([mean_b, mean_g, mean_r], [1,1,3]);
 mean_rgb = reshape([mean_r, mean_g, mean_b], [1,1,3]);
 %% load imdb and dataset file
-load('imdb_merge4cls_predSeg.mat');
+load('../imdb_files/imdb_merge4cls_predSeg.mat');
 %% read matconvnet model
 % set GPU
-gpuId = 3; %[1, 2];
+gpuId = 1; %[1, 2];
 gpuDevice(gpuId);
 flagSaveFig = false; % {true false} whether to store the result
 
@@ -47,7 +47,7 @@ saveFolder = 'main030_cls_res50_alldata_avgPool_masking';
 modelName = 'softmax_net-epoch-38.mat';
 
 saveFolder = 'main041_cls_res50_alldata_avgPool_preSegMasking';
-modelName = 'softmax_net-epoch-29.mat';
+modelName = 'softmax_net-epoch-44.mat';
 
 
 saveToken = [strrep(saveFolder, '/', ''), '_', strrep(modelName, '/', '')];
@@ -95,8 +95,11 @@ predList = zeros(1, length(testIdxList));
 scoreMat = zeros(length(imdb.meta.className), length(testIdxList));
 for imgIdx = 1:length(testIdxList)
     imgPathName = imdb.imgList{testIdxList(imgIdx)};
-    imOrg = single(imread(imgPathName));    
-    gtOrg = single(imread( imdb.maskList{testIdxList(imgIdx)} )); 
+    imgPathName = strrep(imgPathName, 'skong2','skong2/local');
+    imOrg = single(imread(imgPathName));  
+    maskPathName = imdb.maskList{testIdxList(imgIdx)};
+    maskPathName = strrep(maskPathName, 'skong2','skong2/local');    
+    gtOrg = single(imread(maskPathName)); 
     
     imOrg = bsxfun(@minus, imOrg, mean_rgb);  
     grndList(imgIdx) = imdb.labelList(testIdxList(imgIdx));
@@ -235,4 +238,27 @@ xticklabel_rotate([],45,[],'Fontsize',10)
 
 export_fig( sprintf('./confusionMatrix_%dClass_%s.jpg', length(subClassList), saveToken) );
 %% leaving blank
+acc_per_class = [];
+num_per_class = [];
+for i = 1:47
+    idx = find(grndList(:)==i);
+    num_per_class(end+1) = length(idx);
+    tmp = mean(predList(idx) == grndList(idx));
+    name = imdb.meta.className{i};
+    fprintf('%d\t%s\t%.2f\n', i, name, tmp);
+    acc_per_class(end+1)=tmp;
+end
+disp(mean(acc_per_class));
 
+figure();
+scatter(num_per_class, acc_per_class);
+xlabel('number per type');
+ylabel('accuracy');
+export_fig(sprintf('./acc_vs_num.jpg'));
+
+
+figure();
+scatter(log2(num_per_class), acc_per_class);
+xlabel('number per type (log2 scale)');
+ylabel('accuracy');
+export_fig(sprintf('./acc_vs_num_log2.jpg'));
